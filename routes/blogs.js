@@ -9,8 +9,24 @@ router.get("/hello-blogs", function (req, res, next) {
 
 router.get("/all-blogs", async function (req, res, next) {
   try {
+    const limit = Number(req.query.limit);
+    const skip = Number(req.query.limit) * (Number(req.query.page) - 1);
+    const sortField = req.query.sortField;
+    const sortOrder = req.query.sortOrder;
+    const filterField = req.query.filterField;
+    const filterValue = req.query.filterValue;
+
+    const filter = filterField ? { [filterField]: filterValue } : {};
+    const sort = sortField ? { [sortField]: sortOrder } : {};
+
     const collection = await blogsDB().collection("posts");
-    const posts = await collection.find({}).toArray();
+    const posts = await collection
+      .find(filter)
+      .sort(sort)
+      .limit(limit)
+      .skip(skip)
+      .toArray();
+
     res.json(posts);
   } catch (e) {
     res.status(500).send("Error fetching posts.");
