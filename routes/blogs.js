@@ -9,8 +9,11 @@ router.get("/hello-blogs", function (req, res, next) {
 
 router.get("/all-blogs", async function (req, res, next) {
   try {
-    const limit = Number(req.query.limit);
-    const skip = Number(req.query.limit) * (Number(req.query.page) - 1);
+    const limit = Number(req.query.limit) > 0 ? Number(req.query.limit) : 10;
+    const skip =
+      Number(req.query.limit) * (Number(req.query.page) - 1) >= 0
+        ? Number(req.query.limit) * (Number(req.query.page) - 1)
+        : 0;
     const sortField = req.query.sortField;
     const sortOrder = req.query.sortOrder;
     const filterField = req.query.filterField;
