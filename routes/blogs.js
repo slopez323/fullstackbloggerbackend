@@ -9,7 +9,7 @@ router.get("/hello-blogs", function (req, res, next) {
 
 router.get("/all-blogs", async function (req, res, next) {
   try {
-    const limit = Number(req.query.limit) > 0 ? Number(req.query.limit) : 10;
+    const limit = Number(req.query.limit) > 0 ? Number(req.query.limit) : 0;
     const skip =
       Number(req.query.limit) * (Number(req.query.page) - 1) >= 0
         ? Number(req.query.limit) * (Number(req.query.page) - 1)
