@@ -7,7 +7,11 @@ router.get("/blog-list", async function (req, res, next) {
     const collection = await blogsDB().collection("posts");
     const posts = await collection
       .find({})
-      .project({ title: 1, author: 1, createdAt: 1, lastModified: 1, _id: 0 })
+      .project({
+        text: 0,
+        category: 0,
+        _id: 0,
+      })
       .toArray();
     res.json(posts);
   } catch (e) {
