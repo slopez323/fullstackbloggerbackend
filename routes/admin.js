@@ -33,9 +33,10 @@ router.put("/edit-blog", async function (req, res, next) {
       author,
       lastModified: new Date().toISOString(),
     };
-    await collection.updateOne(
+
+    collection.updateOne(
       {
-        id: blogId,
+        id,
       },
       {
         $set: {

@@ -36,6 +36,17 @@ router.get("/all-blogs", async function (req, res, next) {
   }
 });
 
+router.get("/single-blog/:blogId", async function (req, res, next) {
+  try {
+    const id = Number(req.params.blogId);
+    const collection = await blogsDB().collection("posts");
+    const post = await collection.findOne({ id });
+    res.json(post);
+  } catch (e) {
+    res.status(500).send("Error fetching blog list.");
+  }
+});
+
 router.post("/blog-submit", async function (req, res, next) {
   try {
     const title = req.body.title;
